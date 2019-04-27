@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?if $(var.Platform)=x64 ?>
+    <?define ProductCode = "{14828F4A-5AB9-4BC8-A0C2-F474B60B1DD3}" ?>
+  <?elseif $(var.Platform)=x86 ?>
+    <?define ProductCode = "{6EC7980A-42BF-41CF-B5E6-B190D0ACC0AA}" ?>
+  <?endif?>
+
+  <?define UpgradeCode = "{E9D64C1D-F5DC-4429-94D5-5A90D5C3F529}" ?>
+
+  <?define BuildVersion = 1.0.0.0 ?>
+
+  <Product Id="$(var.ProductCode)"
+           Name="!(loc.ProductName_$(var.Platform))"
+           Language="!(loc.Language)"
+           Version="$(var.BuildVersion)"
+           Manufacturer="!(loc.Company)"
+           UpgradeCode="$(var.UpgradeCode)"
+           Codepage="UTF-8">
+
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Platform="$(var.Platform)"
+             Manufacturer="!(loc.Company)"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Comments="!(loc.Comments)"
+             Languages="!(loc.Language)"/>
+
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="icon.ico" SourceFile="$(var.iBank.Core.ProjectDir)\icon.ico"/>
+
+    <Property Id="ARPPRODUCTICON">icon.ico</Property>
+    <Property Id="ARPURLINFOABOUT">https://github.com/mcap-ibank</Property>
+
+    <UIRef Id="WixUI_Minimal"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\eula-en-us.rtf"/>
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\BackgroundLogo.png"/>
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\TopBanner.png"/>
+
+    <Feature Id="ProductFeature" Title="iBank.BankProvider.VTB" Level="1">
+
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="PublishedComponents" />
+
+    </Feature>
+
+  </Product>
+
+</Wix>

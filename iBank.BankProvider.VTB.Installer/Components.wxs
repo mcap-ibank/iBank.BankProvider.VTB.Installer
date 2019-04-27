@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      
+      <ComponentRef Id="MainAppShortcut"/>
+      
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="$(var.iBank.BankProvider.VTB.ProjectDir)\bin\$(var.Configuration)\netcoreapp3.0\win-$(var.Platform)\publish\">
+      <Component Id="MainAppShortcut" Guid="{0253C4B1-5914-4CCC-A276-F33BCE1411F8}">
+        <Shortcut Id="MainAppShorcut"
+                  Name="!(loc.ProductName_$(var.Platform))"
+                  Target="[INSTALLFOLDER]iBank.BankProvider.VTB.exe"
+                  Directory="InstallProgramMenuFolder"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="icon.ico"
+                  />
+
+        <RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes"/>
+        
+        <RemoveFolder Id="RemoveStartMenu" Directory="InstallProgramMenuFolder" On="uninstall"/>
+        
+      </Component>
+    </DirectoryRef>
+    
+  </Fragment>
+  
+</Wix>

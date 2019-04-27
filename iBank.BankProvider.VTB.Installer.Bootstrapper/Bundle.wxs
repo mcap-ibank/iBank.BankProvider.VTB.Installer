@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?if $(var.Platform)=x64 ?>
+  <?define ProductCode = "{ABCA3E0D-1904-41F4-80B5-A9A4A0AAE3D7}" ?>
+  <?elseif $(var.Platform)=x86 ?>
+  <?define ProductCode = "{C9D76A36-E7DE-40C9-BFE2-D39E2E1098F7}" ?>
+  <?endif?>
+
+  <?define UpgradeCode = "{24A6B204-FCE3-4957-99EF-83FC838ED6AA}" ?>
+
+  <?define BuildVersion = 1.0.0.0 ?>
+  
+	<Bundle Name="!(loc.ProductName_$(var.Platform))"
+          Version="$(var.BuildVersion)"
+          Manufacturer="!(loc.Company)"
+          UpgradeCode="$(var.UpgradeCode)"
+          DisableModify="yes"
+          DisableRepair="yes"
+          Compressed="yes"
+          IconSourceFile="$(var.iBank.Core.ProjectDir)\icon.ico">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
+      <bal:WixStandardBootstrapperApplication
+        SuppressOptionsUI="yes"
+        LicenseUrl=""
+        ShowFilesInUse="yes"
+        xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"/>
+    </BootstrapperApplicationRef>
+    
+    <Chain>
+      <?if $(var.Platform)=x64 ?>
+      <ExePackage SourceFile="redist\AccessDatabaseEngine_X64.exe" Permanent="yes" PerMachine="yes" />
+      <?elseif $(var.Platform)=x86 ?>
+      <ExePackage SourceFile="redist\AccessDatabaseEngine.exe" Permanent="yes" PerMachine="yes" />
+      <?endif?>
+      <MsiPackage Id="iBank.BankProvider.VTB.Installer"
+                  SourceFile="$(var.iBank.BankProvider.VTB.Installer.TargetPath)"
+                  DisplayInternalUI="yes"
+                  Visible="yes"
+                  Vital="yes" />
+    </Chain>
+
+	</Bundle>
+</Wix>

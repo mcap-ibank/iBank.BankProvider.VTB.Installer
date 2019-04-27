@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Codepage="UTF-8" Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+  <String Id="Company">Aragas</String>
+
+  <String Id="ProductNameFolder">iBank.BankProvider.VTB</String>
+
+  <String Id="ProductName_x86">iBank.BankProvider.VTB Bundle (32 bit)</String>
+  <String Id="ProductName_x64">iBank.BankProvider.VTB Bundle (64 bit)</String>
+
+  <String Id="Description">Nope</String>
+  <String Id="Keywords">Nope</String>
+  <String Id="Comments">Nope</String>
+
+</WixLocalization>

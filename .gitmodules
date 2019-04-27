@@ -1,0 +1,6 @@
+[submodule "iBank.BankProvider.VTB"]
+	path = iBank.BankProvider.VTB
+	url = https://github.com/mcap-ibank/iBank.BankProvider.VTB.git
+[submodule "iBank.Core"]
+	path = iBank.Core
+	url = https://github.com/mcap-ibank/iBank.Core.git
