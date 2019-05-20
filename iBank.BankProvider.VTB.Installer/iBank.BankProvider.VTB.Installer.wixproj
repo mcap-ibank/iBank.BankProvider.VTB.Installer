@@ -9,26 +9,25 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>iBank.BankProvider.VTB-$(Platform) Installer</OutputName>
     <OutputType>Package</OutputType>
+    <DefineConstants>$(DefineConstants);TargetFramework=$(TargetFramework)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;TargetFramework=$(TargetFramework)</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>$(DefineConstants);Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>TargetFramework=$(TargetFramework)</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;TargetFramework=$(TargetFramework)</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>$(DefineConstants);Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>TargetFramework=$(TargetFramework)</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components.wxs" />
@@ -40,7 +39,7 @@
     <EmbeddedResource Include="Common.wxl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iBank.BankProvider.VTB\iBank.BankProvider.VTB.csproj">
+    <ProjectReference Include="$(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\iBank.BankProvider.VTB.csproj">
       <Name>iBank.BankProvider.VTB</Name>
       <Project>{412172f9-3620-4706-b232-36bf2879b2ad}</Project>
       <Private>True</Private>
@@ -48,7 +47,7 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\iBank.Core\iBank.Core\iBank.Core.csproj">
+    <ProjectReference Include="$(SolutionDir)\iBank.Core\iBank.Core\iBank.Core.csproj">
       <Name>iBank.Core</Name>
       <Project>{afaaf3a3-6b58-4c0c-ab57-8d63e40dd0fd}</Project>
       <Private>True</Private>
@@ -86,8 +85,8 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <Target Name="BeforeBuild">
-    <Exec Command="rd /s /q ..\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)" />
-    <Exec Command="dotnet publish ..\iBank.BankProvider.VTB\iBank.BankProvider.VTB.csproj -f $(TargetFramework) -c $(Configuration) -r win-$(Platform)" />
+    <Exec Command="rd /s /q $(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)" />
+    <Exec Command="dotnet publish &quot;$(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\iBank.BankProvider.VTB.csproj&quot; -f $(TargetFramework) -c $(Configuration) -r win-$(Platform)" />
     <!--
     Б У Д К О  П И Д О Р
     У
@@ -102,7 +101,7 @@
     Р
     -->
     <!--
-    <GetAssemblyIdentity AssemblyFiles="..\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish\iBank.Operator.Desktop.exe">
+    <GetAssemblyIdentity AssemblyFiles="$(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish\iBank.Operator.Desktop.exe">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <PropertyGroup>
@@ -110,13 +109,13 @@
     </PropertyGroup>
     -->
     <PropertyGroup>
-      <DefineConstants>BasePath=..\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish</DefineConstants>
+      <DefineConstants>$(DefineConstants);BasePath=$(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish</DefineConstants>
     </PropertyGroup>
-    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="..\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
+    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
   </Target>
   <Target Name="AfterBuild">
     <!--
-    <GetAssemblyIdentity AssemblyFiles="..\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish\iBank.Operator.Desktop.exe">
+    <GetAssemblyIdentity AssemblyFiles="$(SolutionDir)\iBank.BankProvider.VTB\iBank.BankProvider.VTB\bin\$(Configuration)\$(TargetFramework)\win-$(Platform)\publish\iBank.Operator.Desktop.exe">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     -->
